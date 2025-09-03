@@ -37,17 +37,43 @@ object pepe {
     method sueldo() = self.sueldoNeto()+ bonoPresentismo.monto(self) + bonoResultados.monto(self)
 }
 
-// Rangos con sus propiedades sueldo
+// Categorias con sus propiedades sueldo
 object cadete {
     const sueldoCadete = 20000
 
     method neto() = sueldoCadete 
 }
 
+object vendedor {
+    var sueldoVendedor = 16000
+    
+    method activarAumentoPorMuchasVentas() {
+        sueldoVendedor = sueldoVendedor * 1.25
+    }
+
+    method desactivarAumentoPorMuchasVentas() {
+        sueldoVendedor = 16000
+    }
+
+    method neto() = sueldoVendedor
+
+}
+
 object gerente {
     const sueldoGerente = 15000
 
     method neto() = sueldoGerente 
+}
+
+
+object medioTiempo {
+    var sueldoMedioTiempo = 0
+
+    method categoriaBase(categoria) {
+        sueldoMedioTiempo = categoria.neto()/2
+    }
+
+    method neto() = sueldoMedioTiempo 
 }
 
 // Bonos por resultado calculados segun el empleado que se le de
@@ -62,15 +88,17 @@ object bonoResultadoPorcentaje {
 object bonoResultadoMontoFijo {
     const montoFijo = 800
 
-    // Devuelve el monto del bono resultado fijo de 800$ sin importar el rango
+    // Devuelve el monto del bono resultado fijo de 800$ sin importar la categoria
 
     method monto(_categoria) = montoFijo 
 }
 
+// Bono nulo valido para bono resultado y porcentaje
 object bonoNulo {
     method monto(_categoria) = 0
 }
 
+// Bono por presentismo (demagocio solo depende de la categoria)
 object bonoPresentismoNormal {  
     var monto = 0
 
@@ -104,4 +132,56 @@ object bonoPresentismoDemagogico {
     // Devuelve el monto del bono segun el sueldo neto del empleado
 
     method monto(empleado) = if (empleado.sueldoNeto()<18000) 500 else 300
+}
+
+
+
+object sofia {
+    var categoria = cadete
+    var bonoResultados = bonoNulo
+
+    method bonoResultados(_bonoResultados) {
+        bonoResultados = _bonoResultados
+    }
+
+    method sueldoNeto(){
+        return categoria.neto() * 1.3 
+    }
+
+    method sueldo() = self.sueldoNeto()+ bonoResultados.monto(self) 
+}
+
+
+object roque {
+    var neto = 28000
+    var bonoResultados = bonoResultadoMontoFijo
+
+    method bonoResultados(_bonoResultados) {
+        bonoResultados = _bonoResultados
+    }
+
+    method sueldoNeto() = neto + bonoResultados.monto(self) + 9000
+  
+}
+
+object ernesto {
+    var compañero = pepe
+    var neto = 0
+    var bonoPresentismo = bonoPresentismoNormal
+
+
+    method asignarCompañero(_compañero) {
+        compañero = _compañero
+    }
+
+    method bonoPresentismo(_bonoPresentismo) {
+        bonoPresentismo = _bonoPresentismo
+    }
+
+    method sueldoNeto() {
+        neto = compañero.sueldoNeto()
+    }
+
+    method sueldo() = neto + bonoPresentismo.monto(self)
+  
 }
