@@ -93,12 +93,12 @@ object bonoResultadoMontoFijo {
     method monto(_categoria) = montoFijo 
 }
 
-// Bono nulo valido para bono resultado y porcentaje
+// Bonos nulo valido para bono resultado y porcentaje
 object bonoNulo {
     method monto(_categoria) = 0
 }
 
-// Bono por presentismo (demagocio solo depende de la categoria)
+// Bonos por presentismo (demagocio solo depende de la categoria)
 object bonoPresentismoNormal {  
     var monto = 0
 
@@ -140,27 +140,32 @@ object sofia {
     var categoria = cadete
     var bonoResultados = bonoNulo
 
+    //Modifica el tipo de bono por resultado que recibe
     method bonoResultados(_bonoResultados) {
         bonoResultados = _bonoResultados
     }
 
+    // Devuelve el sueldo neto de sofia segun su categoria
     method sueldoNeto(){
         return categoria.neto() * 1.3 
     }
 
+    // Devuelve el sueldo compelto de sofia
     method sueldo() = self.sueldoNeto()+ bonoResultados.monto(self) 
 }
 
 
 object roque {
-    var neto = 28000
+    const neto = 28000
     var bonoResultados = bonoResultadoMontoFijo
 
+    //Modifica el tipo de bono por resultado que recibe roque
     method bonoResultados(_bonoResultados) {
         bonoResultados = _bonoResultados
     }
 
-    method sueldoNeto() = neto + bonoResultados.monto(self) + 9000
+    // el sueldo completo de roque
+    method sueldo() = neto + bonoResultados.monto(self) + 9000
   
 }
 
@@ -168,20 +173,27 @@ object ernesto {
     var compañero = pepe
     var neto = 0
     var bonoPresentismo = bonoPresentismoNormal
+    const cantidadDeFaltas = 0
 
-
+    //Asigna el compañero a roque 
     method asignarCompañero(_compañero) {
         compañero = _compañero
     }
 
+    ////Modifica el tipo de bono por presentismo que recibe ernesto
     method bonoPresentismo(_bonoPresentismo) {
         bonoPresentismo = _bonoPresentismo
     }
 
+    //modifica y devuelve el sueldo neto de ernesto segun el compañero que se le asigne
     method sueldoNeto() {
         neto = compañero.sueldoNeto()
+        return neto
     }
 
-    method sueldo() = neto + bonoPresentismo.monto(self)
+    method diasQueFalto() = cantidadDeFaltas
+
+    //Devuelve el sueldo completo de ernesto
+    method sueldo() = self.sueldoNeto() + bonoPresentismo.monto(self)
   
 }
