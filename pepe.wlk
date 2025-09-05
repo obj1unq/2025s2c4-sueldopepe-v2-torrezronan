@@ -171,7 +171,6 @@ object roque {
 
 object ernesto {
     var compañero = pepe
-    var neto = 0
     var bonoPresentismo = bonoPresentismoNormal
     const cantidadDeFaltas = 0
 
@@ -185,12 +184,12 @@ object ernesto {
         bonoPresentismo = _bonoPresentismo
     }
 
-    //modifica y devuelve el sueldo neto de ernesto segun el compañero que se le asigne
-    method sueldoNeto() {
-        neto = compañero.sueldoNeto()
-        return neto
+    // Devuelve el sueldo neto de ernesto segun el compañero que se le asigne
+    method sueldoNeto() {  
+        return compañero.sueldoNeto()
     }
 
+    // Devuelve los dias que falto
     method diasQueFalto() = cantidadDeFaltas
 
     //Devuelve el sueldo completo de ernesto

@@ -34,6 +34,21 @@ describe "Sueldo Pepe" {
 		pepe.cantidadDeFaltas(1)
 		assert.equals(23000, pepe.sueldo())
 	}
+}
 
-	
+describe "Sueldo Pepe bonus" {
+
+	test "Primer caso de prueba" {
+		medioTiempo.categoriaBase(cadete)
+		pepe.categoria(medioTiempo)
+		pepe.bonoResultados(bonoResultadoPorcentaje)
+		pepe.bonoPresentismo(bonoPresentismoDemagogico)
+		pepe.cantidadDeFaltas(1)
+		roque.bonoResultados(bonoResultadoMontoFijo)
+		ernesto.asignarCompañero(pepe)
+		ernesto.bonoPresentismo(bonoPresentismoAjuste)
+		assert.equals(11500, pepe.sueldo())
+		assert.equals(37800, roque.sueldo())
+		assert.equals(10100, ernesto.sueldo())
+	}
 }
